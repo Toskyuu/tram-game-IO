@@ -6,7 +6,7 @@ class Game {
   #context = this.#canvas.getContext("2d");
   #tram = new Tram(this.#context, 1);
   #obstaclesList = [];
-  // #karolIMG = new Image();
+  #karolIMG = new Image();
 
   getCanvas() {
     return this.#canvas;
@@ -85,7 +85,7 @@ class Game {
     );
   }
   endGame() {
-    // this.#karolIMG.src = "../img/karol.jpg";
+    this.#karolIMG.src = "../img/karol.jpg";
     this.playEngGameSound();
 
     setTimeout(() => {
