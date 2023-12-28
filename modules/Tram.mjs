@@ -3,9 +3,8 @@ class Tram {
   #pickedPassengers = 0;
   #track;
   #context;
-  #passengersToPickup;
+  #passengersToPickup = 100;
   #tramIMG = new Image();
-
   constructor(context, track) {
     this.#context = context;
     this.#track = track;
@@ -50,12 +49,19 @@ class Tram {
   pickupPassengers(passengers) {
     if (this.#pickedPassengers + passengers <= this.#passengersToPickup) {
       this.#pickedPassengers += passengers;
+
     } else {
       this.#pickedPassengers = this.#passengersToPickup;
     }
   }
   dropOffPassengers() {
     this.#pickedPassengers = 0;
+  }
+  getPassengersToPickup() {
+    return this.#passengersToPickup;
+  }
+  getPickedPassengers() {
+    return this.#pickedPassengers;
   }
 }
 

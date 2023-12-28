@@ -1,17 +1,12 @@
 import Game from "./modules/Game.mjs";
+import Menu from "./modules/Menu.mjs"
 
-const gra = new Game();
-gra.start();
-
-gra.getCanvas().focus();
-
-gra.getCanvas().addEventListener("keydown", (event) => {
-  switch (event.key) {
-    case "w":
-      gra.getTram().moveUp();
-      break;
-    case "s":
-      gra.getTram().moveDown();
-      break;
-  }
+const menu = new Menu();
+menu.getCanvas().addEventListener('click', (event) => {
+  menu.handleMouseClick(event);
 });
+
+document.getElementById('start-button').addEventListener('click', () => {
+  menu.startGame();
+});
+
