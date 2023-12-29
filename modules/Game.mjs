@@ -5,7 +5,6 @@ import TramStop from "./TramStop.mjs";
 class Game {
   #canvas = document.getElementById("board");
   #context = this.#canvas.getContext("2d");
-  #tram = new Tram(this.#context, 1);
   #obstaclesList = [];
   #karolIMG = new Image();
   #tramStopList = [];
@@ -14,40 +13,40 @@ class Game {
   #scoreElement = document.getElementById("score");
   #freeSeatsElement = document.getElementById("freeseats");
   #pickedPassengersElement = document.getElementById("passengers");
+  #level = 1;
+  #speed = 5;
+  #tram;
 
-  constructor(){
+  constructor(level) {
+    this.#level = level;
+    if (level == 2) {
+      this.#speed = 7;
+    }
+    this.#tram = new Tram(this.#context, Math.floor(level / 2), level);
+
     this.start();
   }
 
-  dropOffPassengers(){
-    try{
+  dropOffPassengers() {
+    try {
       this.#currentTramStop.pickPassengers();
-      if(this.#tram.getPassengersToPickup() === this.#tram.getPickedPassengers()){
+      if (
+        this.#tram.getPassengersToPickup() === this.#tram.getPickedPassengers()
+      ) {
         this.#score += this.#tram.getPickedPassengers() * 1.5;
         this.#tram.dropOffPassengers();
-      }
-      else{
+      } else {
         this.#score += this.#tram.getPickedPassengers();
         this.#tram.dropOffPassengers();
       }
-      
-    }
-    catch{
-      console.error("Brak obiektu tramStop");
-    }
+    } catch {}
   }
 
   pickPassengers() {
-    console.log("Proba podjeta");
-    try{
+    try {
       const passengers = this.#currentTramStop.pickPassengers();
       this.#tram.pickupPassengers(passengers);
-    }
-      catch{
-        console.error("Brak obiektu tramStop");
-      }
- 
-      
+    } catch {}
   }
   getCanvas() {
     return this.#canvas;
@@ -77,7 +76,9 @@ class Game {
     this.#freeSeatsElement.textContent = this.#tram
       .getPassengersToPickup()
       .toString();
-    this.#pickedPassengersElement.textContent = this.#tram.getPickedPassengers().toString();
+    this.#pickedPassengersElement.textContent = this.#tram
+      .getPickedPassengers()
+      .toString();
     this.#tramStopList.forEach((tramStop) => {
       tramStop.draw();
     });
@@ -89,7 +90,7 @@ class Game {
   }
 
   generateTramStop() {
-    const track = Math.floor(Math.random() * 3);
+    const track = Math.floor(Math.random() * (this.#level + 2));
     const passengersWaiting = Math.floor(Math.random() * 50);
     const minDistance = 800;
     const lastTramStop = this.#tramStopList[this.#tramStopList.length - 1];
@@ -102,15 +103,15 @@ class Game {
         passengersWaiting,
         this.#context,
         track,
-        5,
+        this.#speed,
         200
       );
       this.#tramStopList.push(newTramStop);
     }
   }
   generateObstacle() {
-    const track = Math.floor(Math.random() * 3);
-    const minDistance = 200;
+    const track = Math.floor(Math.random() * (this.#level + 3));
+    const minDistance = 0;
 
     const lastObstacle = this.#obstaclesList[this.#obstaclesList.length - 1];
     const distance = lastObstacle
@@ -118,13 +119,13 @@ class Game {
       : Infinity;
 
     if (distance >= minDistance) {
-      const newObstacle = new Obstacle(track, this.#context, 5, 50);
+      const newObstacle = new Obstacle(track, this.#context, this.#speed, 50);
       this.#obstaclesList.push(newObstacle);
     }
   }
   update() {
-    if (Math.random() < 0.02) {
-      // this.generateObstacle();
+    if (Math.random() < 0.03 ) {
+      this.generateObstacle();
     } else if (Math.random() > 0.99) {
       this.generateTramStop();
     }
@@ -134,7 +135,7 @@ class Game {
 
       if (this.#tramStopList[i].checkCloseness(this.#tram)) {
         this.#currentTramStop = this.#tramStopList[i];
-      } 
+      }
 
       if (this.#tramStopList[i].getX() + this.#tramStopList[i].getWidth() < 0) {
         this.#tramStopList.splice(i, 1);
@@ -173,7 +174,7 @@ class Game {
       alert("Game Over!");
     }, 10);
     this.#obstaclesList = [];
-    this.#tram = new Tram(this.#context, 1);
+    this.#tram = new Tram(this.#context, 1, this.#level);
     this.#score = 0;
     this.start();
   }

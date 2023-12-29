@@ -1,7 +1,7 @@
 class Obstacle {
   #track;
   #context;
-  #x = 800;
+  #x = 1200;
   #y;
   #height = 40;
   #width;

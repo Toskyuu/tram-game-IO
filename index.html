@@ -8,12 +8,17 @@
         <script type="module" src="Main.js"></script>
     </head>
     <body>
-        <h1>Tram Game</h1>
-        <button id="start-button">Start Game</button>
-        <canvas id="board" tabindex="0" height="300px" width="800px"></canvas>
-        <h1>Score: <p id="score"></p></h1>
-        <h1>Free seats: <p id="freeseats"></p></h1>
-        <h1>Picked Passengers: <p id="passengers"></p></h1>
-
+        <div class="container">
+            <h1>Tram Game</h1>
+            <h1>
+              <p id="score-container">Score: <span id="score"></span></p>
+              <p id="freeseats-container">Free seats: <span id="freeseats"></span></p>
+              <p id="passengers-container">Picked Passengers:    <span id="passengers"></span></p>
+            </h1>
+            <div id="button-container">
+              <button id="start-button">Start Game</button>
+            </div>
+            <canvas id="board" tabindex="0" height="500px" width="1200px"></canvas>
+          </div>
     </body>
 </html>

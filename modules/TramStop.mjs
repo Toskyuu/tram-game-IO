@@ -2,7 +2,7 @@ import Tram from "./Tram.mjs";
 class TramStop {
   #passengersWaiting;
   #track;
-  #x = 800;
+  #x = 1200;
   #y;
   #width;
   #height = 50;
@@ -27,7 +27,7 @@ class TramStop {
     return false;
   }
   draw() {
-    this.#context.fillStyle = "rgba(255, 0, 0, 0.5)";
+    this.#context.fillStyle = "rgba(0, 255, 0, 0.8)";
     this.#context.fillRect(this.#x, this.#y, this.#width, this.#height);
   }
 

@@ -43,7 +43,6 @@ class Menu{
             mouseY <= buttonY + 10
           ) {
             this.#selectedLevel = i;
-            console.log("hello" + i);
             this.drawMenu();
             break;
           }
@@ -53,7 +52,7 @@ class Menu{
 
     startGame() {
         if (this.#selectedLevel !== null) {
-          const gra = new Game();
+          const gra = new Game(this.#selectedLevel);
           gra.getCanvas().focus();
           gra.getCanvas().addEventListener("keydown", (event) => {
             switch (event.key) {

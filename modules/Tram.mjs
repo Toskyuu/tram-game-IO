@@ -5,11 +5,13 @@ class Tram {
   #context;
   #passengersToPickup = 100;
   #tramIMG = new Image();
-  constructor(context, track) {
+  #level;
+  constructor(context, track, level) {
     this.#context = context;
     this.#track = track;
     this.#tramIMG.src = "../img/tram.png";
     this.#tramIMG.crossOrigin = "Anonymous";
+    this.#level = level;
   }
   draw() {
     this.#context.drawImage(
@@ -21,7 +23,7 @@ class Tram {
     );
   }
   moveDown() {
-    if (this.#track < 2) {
+    if (this.#track < this.#level + 2) {
       setTimeout(() => {
         this.#track++;
       }, 100);
